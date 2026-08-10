@@ -1,0 +1,117 @@
+[
+  {
+    "name": "Stekt Lax med Champinjoner i Soja-citronsås",
+    "image_url": "https://exempel.se/carbonara.jpg",
+    "servings": 2,
+    "time_minutes": 40,
+    "category_id": 1,
+    "steps": [
+      {
+        "step_number": 1,
+        "instruction": "Peppra och salta laxfiléerna och vänta sedan i 5-10 minuter. Torka av med hushållspapper. Skär champinjonerna i skivor."
+      },
+      {
+        "step_number": 2,
+        "instruction": "Lägg laxfiléerna och vetemjöl i en fryspåse och skaka tills vetemjölet täcker laxen."
+      },
+      {
+        "step_number": 3,
+        "instruction": "Värm upp rapsoljan och halva smöret(15 gram) i en stekpanna. Stek laxfiléerna på medel-hög värme. Vänd på laxen när den har fått en fin brun färg."
+      },
+      {
+        "step_number": 4,
+        "instruction": "Låt laxen steka under lock på låg värme i 2-3 minuter. Vänd på laxen en gång till och stek på medel värme tills undersidan är gyllenbrun. Ta upp laxen och lägg på en tallrik."
+      },
+      {
+        "step_number": 5,
+        "instruction": "Stek champinjonerna i 2-3 minuter. Tillsätt japansk soja, mirin, citronsaft och resterande smör(15 gram) och låt allt koka ihop i 1-2 minuter. Häll champinjonerna och såsen över laxen och servera med ris eller potatis."
+      }
+    ],
+    "ingredients": [
+      { "name": "laxfilé", "amount": 4, "unit": "st" },
+      { "name": "champinjoner", "amount": 250, "unit": "gram" },
+      { "name": "salt" },
+      { "name": "peppar" },
+      { "name": "vetemjöl", "amount": 3, "unit": "msk" },
+      { "name": "rapsolja", "amount": 2, "unit": "msk" },
+      { "name": "smör", "amount": 30, "unit": "gram" },
+      { "name": "japansk soja", "amount": 2, "unit": "msk" },
+      { "name": "mirin", "amount": 2, "unit": "msk" },
+      { "name": "citronsaft", "amount": 2, "unit": "msk" }
+    ]
+  },
+  {
+    "name": "Spaghetti carbonara",
+    "image_url": "https://exempel.se/carbonara.jpg",
+    "servings": 4,
+    "time_minutes": 20,
+    "category_id": 2,
+    "steps": [
+      {
+        "step_number": 1,
+        "instruction": "Koka spaghetti enligt förpackningen i saltat vatten."
+      },
+      {
+        "step_number": 2,
+        "instruction": "Stek pancettan i en torr panna tills krispig."
+      },
+      {
+        "step_number": 3,
+        "instruction": "Vispa ihop äggulor, riven pecorino och svartpeppar i en skål."
+      },
+      {
+        "step_number": 4,
+        "instruction": "Blanda den varma pastan med pancettan och ta av från värmen."
+      },
+      {
+        "step_number": 5,
+        "instruction": "Rör ner äggblandningen snabbt så att den inte stelnar. Späd med pastavatten."
+      }
+    ],
+    "ingredients": [
+      { "name": "spaghetti", "amount": 400, "unit": "gram" },
+      { "name": "pancetta", "amount": 150, "unit": "gram" },
+      { "name": "äggulor", "amount": 4, "unit": "st" },
+      { "name": "pecorino", "amount": 1, "unit": "dl" },
+      { "name": "svartpeppar", "amount": 1, "unit": "tsk" },
+      { "name": "salt", "amount": 1, "unit": "tsk" }
+    ]
+  },
+  {
+    "name": "Spaghetti carbonara",
+    "image_url": "https://exempel.se/carbonara.jpg",
+    "servings": 4,
+    "time_minutes": 20,
+    "category_id": 2,
+    "steps": [
+      {
+        "step_number": 1,
+        "instruction": "Koka spaghetti enligt förpackningen i saltat vatten."
+      },
+      {
+        "step_number": 2,
+        "instruction": "Stek pancettan i en torr panna tills krispig."
+      },
+      {
+        "step_number": 3,
+        "instruction": "Vispa ihop äggulor, riven pecorino och svartpeppar i en skål."
+      },
+      {
+        "step_number": 4,
+        "instruction": "Blanda den varma pastan med pancettan och ta av från värmen."
+      },
+      {
+        "step_number": 5,
+        "instruction": "Rör ner äggblandningen snabbt så att den inte stelnar. Späd med pastavatten."
+      }
+    ],
+    "ingredients": [
+      { "name": "spaghetti", "amount": 400, "unit": "gram" },
+      { "name": "pancetta", "amount": 150, "unit": "gram" },
+      { "name": "äggulor", "amount": 4, "unit": "st" },
+      { "name": "pecorino", "amount": 1, "unit": "dl" },
+      { "name": "svartpeppar", "amount": 1, "unit": "tsk" },
+      { "name": "salt", "amount": 1, "unit": "tsk" }
+    ]
+  }
+]
