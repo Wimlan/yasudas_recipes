@@ -84,25 +84,7 @@ async function getDetailedRecipes(recipes: Recipe[]) {
   );
 }
 
-//GET RECIPE BY ID
-app.get("/api/recipes/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const result = await pool.query<Recipe>(
-      "SELECT * FROM recipes WHERE id=$1",
-      [id],
-    );
-    const recipes: Recipe[] = result.rows;
-
-    res.send(await getDetailedRecipes(recipes));
-  } catch (error) {
-    console.error("Error retrieving recipe:", error);
-    res.status(500).send("Error retrieving recipe");
-  }
-});
-
-//GET NEWEST RECIPES
+//GET: NEWEST RECIPES
 app.get("/api/recipes/newest", async (req, res) => {
   try {
     const result = await pool.query<Recipe>(
@@ -116,7 +98,7 @@ app.get("/api/recipes/newest", async (req, res) => {
   }
 });
 
-//GET RECIPE LIST
+//GET: RECIPE LIST
 app.get("/api/recipes", async (req, res) => {
   //Query can be used to filter recipes by category, if no query is provided all recipes will be returned
   const category = req.query.category as string | undefined;
@@ -176,7 +158,25 @@ app.get("/api/recipes", async (req, res) => {
   }
 });
 
-//ADD A RECIPE
+//GET: RECIPE BY ID
+app.get("/api/recipes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query<Recipe>(
+      "SELECT * FROM recipes WHERE id=$1",
+      [id],
+    );
+    const recipes: Recipe[] = result.rows;
+
+    res.send(await getDetailedRecipes(recipes));
+  } catch (error) {
+    console.error("Error retrieving recipe:", error);
+    res.status(500).send("Error retrieving recipe");
+  }
+});
+
+//POST:ADD A RECIPE
 app.post("/api/recipes/add", validateRecipe, async (req, res) => {
   const {
     name,
@@ -252,7 +252,7 @@ app.post("/api/recipes/add", validateRecipe, async (req, res) => {
   }
 });
 
-//UPDATE A RECIPE
+//PUT:UPDATE A RECIPE
 app.put(
   "/api/recipes/update/:id",
   async (
@@ -296,7 +296,7 @@ app.put(
   },
 );
 
-//DELETE RECIPE
+//DELETE: RECIPE
 app.delete(
   "/api/recipes/delete/:id",
   async (
