@@ -1,40 +1,36 @@
 import Carousel from "react-bootstrap/Carousel";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import type { Recipe } from "../pages/Recipe";
 
-interface Meal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
+const carouselRecipes = [
+  "Omelett med shredded chicken, spenat & fetaost",
+  "Kycklinggryta med curry",
+  "Sallad med yoghurtmarinerad lax",
+];
 
 function MainCarousel() {
-  const [meal, setMeal] = useState<Meal[] | null>(null);
-  const meals = [
-    "Japanese Katsudon",
-    "Ramen Noodles with Boiled Egg",
-    "Sweet and Sour Pork",
-  ];
+  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
   useEffect(() => {
     Promise.all(
-      meals.map((m) =>
-        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${m}`)
+      carouselRecipes.map((recipe) =>
+        fetch(`/api/recipes/?search=${recipe}`)
           .then((response) => response.json())
-          .then((result) => result.meals[0]),
+          .then((result) => result[0]),
       ),
-    ).then((results) => setMeal(results));
+    ).then((results) => setRecipes(results));
   }, []);
 
   return (
     <>
       <Carousel id="main-carousel">
-        {meal?.map((value) => (
-          <Carousel.Item interval={1500} key={value.idMeal}>
-            <Link to={`/recipe/${value.idMeal}`}>
+        {recipes?.map((recipe) => (
+          <Carousel.Item interval={1500} key={recipe.id}>
+            <Link to={`/recipe/${recipe.id}`}>
               <img
                 className="d-block w-100"
-                src={value.strMealThumb}
+                src={recipe.image_url}
                 alt="Slides"
               />
               <div
@@ -47,7 +43,7 @@ function MainCarousel() {
                 }}
               />
               <Carousel.Caption>
-                <h3>{value.strMeal}</h3>
+                <h3>{recipe.name}</h3>
               </Carousel.Caption>
             </Link>
           </Carousel.Item>

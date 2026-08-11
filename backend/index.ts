@@ -1,8 +1,8 @@
 import express from "express";
+import path from "path";
 import pool from "./database.ts";
 
 const app = express();
-app.use(express.json());
 
 interface Ingredient {
   name: string;
@@ -84,10 +84,29 @@ async function getDetailedRecipes(recipes: Recipe[]) {
   );
 }
 
+//GET RECIPE BY ID
+app.get("/api/recipes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query<Recipe>(
+      "SELECT * FROM recipes WHERE id=$1",
+      [id],
+    );
+    const recipes: Recipe[] = result.rows;
+
+    res.send(await getDetailedRecipes(recipes));
+  } catch (error) {
+    console.error("Error retrieving recipe:", error);
+    res.status(500).send("Error retrieving recipe");
+  }
+});
+
 //GET RECIPE LIST
 app.get("/api/recipes", async (req, res) => {
   //Query can be used to filter recipes by category, if no query is provided all recipes will be returned
-  let category = req.query.category as string | undefined;
+  const category = req.query.category as string | undefined;
+  const search = req.query.search as string | undefined;
 
   if (category !== undefined) {
     try {
@@ -113,6 +132,19 @@ app.get("/api/recipes", async (req, res) => {
       res.send(await getDetailedRecipes(recipes));
     } catch {
       res.status(500).send("Category not found");
+    }
+  } else if (search) {
+    try {
+      //Retrieves recipes that match the search query in their name
+      const result = await pool.query<Recipe>(
+        "SELECT * FROM recipes WHERE name ILIKE $1",
+        [`%${search}%`],
+      );
+      const recipes: Recipe[] = result.rows;
+      res.send(await getDetailedRecipes(recipes));
+    } catch (error) {
+      console.error("Error retrieving recipes:", error);
+      res.status(500).send("Error retrieving recipes");
     }
   } else {
     try {
@@ -292,6 +324,8 @@ app.delete(
   },
 );
 
+app.use(express.static(path.join(path.resolve(), "dist")));
+
 app.listen(3000, () => {
-  console.log("Webbtjänsten kan nu ta emot anrop.");
+  console.log("Redo på http://localhost:3000/");
 });

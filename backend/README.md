@@ -1,3 +1,5 @@
+Build and Start from backend: npm run build-frontend
+
 GET ALL RECIPES
 GET: /api/recipes
 

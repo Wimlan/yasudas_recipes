@@ -1,77 +1,73 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-interface Meal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-  strInstructions: string;
+export interface Recipe {
+  id: string;
+  name: string;
+  image_url: string;
+  ingredients: Ingredient[];
+  steps: Step[];
+}
+
+interface Ingredient {
+  name: string;
+  amount: number;
+  unit: string;
+}
+interface Step {
+  id: number;
+  step_number: number;
+  instruction: string;
 }
 
 function Recipe() {
   const { id } = useParams();
 
-  const [meal, setMeal] = useState<Meal | null>(null);
-  const [ingredients, setIngredients] = useState<string[]>([]);
-  const [measure, setMeasure] = useState<string[]>([]);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    fetch(`/api/recipes/${id}`)
       .then((response) => response.json())
       .then((result) => {
-        const mealData = result.meals?.[0];
-        setMeal(mealData);
-
-        const newIngredients: string[] = [];
-        for (let i = 1; i <= 20; i++) {
-          const ingredient = mealData[`strIngredient${i}`];
-          if (ingredient && ingredient.trim() !== "") {
-            newIngredients.push(ingredient);
-          }
-        }
-        setIngredients(newIngredients);
-
-        const newMeasure: string[] = [];
-        for (let i = 1; i <= 20; i++) {
-          const measure = mealData[`strMeasure${i}`];
-          if (measure && measure.trim() !== "") {
-            newMeasure.push(measure);
-          }
-        }
-        setMeasure(newMeasure);
+        setRecipe(result[0]);
       });
   }, [id]);
 
   return (
     <>
       <article id="recipe-detail">
-        <h2>{meal?.strMeal}</h2>
-        <img src={meal?.strMealThumb} alt="" />
+        <h2>{recipe?.name}</h2>
+        <img src={recipe?.image_url} alt="" />
 
-        <div className="instructions">
+        <div className="guide">
           <h3 className="amount">
             <span>Portioner: 4</span> <span>Tid: 40 min</span>
           </h3>
 
-          <section>
+          <section className="ingredients">
             <h3>Ingredienser</h3>
-            <div className="ingredients">
-              <ul className="food">
-                {ingredients.map((value, index) => (
-                  <li key={index}>{value}</li>
-                ))}
-              </ul>
-              <ul>
-                {measure.map((value, index) => (
-                  <li key={index}>{value}</li>
-                ))}
-              </ul>
+            <div>
+              {recipe?.ingredients.map((ingredient, index) => (
+                <ul className="food">
+                  <li key={index}>{ingredient.name}</li>
+                  <div className="unit">
+                    <li key={index}>{ingredient.amount}</li>
+                    <li key={index}>{ingredient.unit}</li>
+                  </div>
+                </ul>
+              ))}
             </div>
           </section>
 
-          <section>
+          <section className="instructions">
             <h3>Instruktioner</h3>
-            <p>{meal?.strInstructions}</p>
+
+            {recipe?.steps.map((step) => (
+              <ul className="steps" key={step.id}>
+                <li>{step.step_number}.</li>
+                <li>{step.instruction}</li>
+              </ul>
+            ))}
           </section>
         </div>
       </article>

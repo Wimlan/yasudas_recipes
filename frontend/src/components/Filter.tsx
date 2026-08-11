@@ -51,14 +51,14 @@ function Filter({ setCategory }: FilterProps) {
               <Button
                 variant="third"
                 id="button-addon2"
-                onClick={() => setCategory("beef")}
+                onClick={() => setCategory("meat")}
               >
                 Kött
               </Button>
               <Button
                 variant="third"
                 id="button-addon2"
-                onClick={() => setCategory("vegetarian")}
+                onClick={() => setCategory("veg")}
               >
                 Vegetariskt
               </Button>

@@ -6,12 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import type { Categories } from "../pages/RecipeList";
 // import Button from 'react-bootstrap/Button';
-
-interface Meal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
+import type { Recipe } from "../pages/Recipe";
 
 interface SearchResultProps {
   category: Categories;
@@ -19,51 +14,41 @@ interface SearchResultProps {
 
 function SearchResult({ category }: SearchResultProps) {
   const { search } = useContext(SearchContext);
-  const [meal, setMeal] = useState<Meal[] | null>(null);
+  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
   useEffect(() => {
-    if (search === "") {
-      fetch("https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese")
+    if (search === "" && category === null) {
+      fetch("/api/recipes")
         .then((response) => response.json())
         .then((result) => {
-          setMeal(result.meals);
+          setRecipes(result);
+        });
+    } else if (search !== "") {
+      fetch(`/api/recipes/?search=${search}`)
+        .then((response) => response.json())
+        .then((result) => {
+          setRecipes(result);
         });
     } else {
-      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`)
+      fetch(`/api/recipes/?category=${category}`)
         .then((response) => response.json())
         .then((result) => {
-          setMeal(result.meals);
+          setRecipes(result);
         });
     }
-  }, [search]);
-
-  useEffect(() => {
-    if (category === null) {
-      fetch("https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese")
-        .then((response) => response.json())
-        .then((result) => {
-          setMeal(result.meals);
-        });
-    } else {
-      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
-        .then((response) => response.json())
-        .then((result) => {
-          setMeal(result.meals);
-        });
-    }
-  }, [category]);
+  }, [search, category]);
 
   return (
     <>
       <div className="all-recipes">
         <Row xs={1} md={2} className="g-5 meal-cards">
-          {meal?.map((value) => (
-            <Col key={value.idMeal}>
-              <Link to={`/recipe/${value.idMeal}`}>
+          {recipes?.map((recipe) => (
+            <Col key={recipe.id}>
+              <Link to={`/recipe/${recipe.id}`}>
                 <Card>
-                  <Card.Img variant="top" src={value.strMealThumb} />
+                  <Card.Img variant="top" src={recipe.image_url} />
                   <Card.Body>
-                    <Card.Title>{value.strMeal}</Card.Title>
+                    <Card.Title>{recipe.name}</Card.Title>
                   </Card.Body>
                 </Card>
               </Link>

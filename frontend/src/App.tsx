@@ -79,7 +79,7 @@ function App() {
           <footer>
             <div>
               <p>
-                Website made by
+                Website by
                 <br /> Wilma Yasuda
               </p>
               <a href="https://wilmayasuda.se/">wilmayasuda.se</a>

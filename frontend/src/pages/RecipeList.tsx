@@ -3,7 +3,7 @@ import SearchResult from "../components/SearchResult";
 import Filter from "../components/Filter";
 import { useState } from "react";
 
-export type Categories = "seafood" | "beef" | "vegetarian" | null;
+export type Categories = "seafood" | "meat" | "veg" | null;
 
 function RecipeList() {
   const [search, setSearch] = useState("");
