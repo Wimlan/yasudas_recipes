@@ -10,7 +10,7 @@ function Recommended() {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
   useEffect(() => {
-    fetch("/api/recipes")
+    fetch("/api/recipes/newest")
       .then((response) => response.json())
       .then((result) => {
         setRecipes(result);

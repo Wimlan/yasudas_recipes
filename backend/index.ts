@@ -102,6 +102,20 @@ app.get("/api/recipes/:id", async (req, res) => {
   }
 });
 
+//GET NEWEST RECIPES
+app.get("/api/recipes/newest", async (req, res) => {
+  try {
+    const result = await pool.query<Recipe>(
+      "SELECT * FROM recipes ORDER BY created_at DESC LIMIT 4",
+    );
+    const recipes: Recipe[] = result.rows;
+    res.send(await getDetailedRecipes(recipes));
+  } catch (error) {
+    console.error("Error retrieving newest recipes:", error);
+    res.status(500).send("Error retrieving newest recipes");
+  }
+});
+
 //GET RECIPE LIST
 app.get("/api/recipes", async (req, res) => {
   //Query can be used to filter recipes by category, if no query is provided all recipes will be returned
@@ -124,7 +138,7 @@ app.get("/api/recipes", async (req, res) => {
 
       //retrieves the recipes that belong to the specified category using the retrieved category id
       const result = await pool.query<Recipe>(
-        "SELECT * FROM recipes WHERE category_id=$1",
+        "SELECT * FROM recipes WHERE category_id=$1 ORDER BY created_at DESC",
         [categoryId[0]?.id],
       );
       const recipes: Recipe[] = result.rows;
@@ -137,7 +151,7 @@ app.get("/api/recipes", async (req, res) => {
     try {
       //Retrieves recipes that match the search query in their name
       const result = await pool.query<Recipe>(
-        "SELECT * FROM recipes WHERE name ILIKE $1",
+        "SELECT * FROM recipes WHERE name ILIKE $1 ORDER BY created_at DESC",
         [`%${search}%`],
       );
       const recipes: Recipe[] = result.rows;
@@ -149,7 +163,9 @@ app.get("/api/recipes", async (req, res) => {
   } else {
     try {
       //Retrieves all recipes if no category query is provided
-      const result = await pool.query<Recipe>("SELECT * FROM recipes");
+      const result = await pool.query<Recipe>(
+        "SELECT * FROM recipes ORDER BY created_at DESC",
+      );
       const recipes: Recipe[] = result.rows;
 
       res.send(await getDetailedRecipes(recipes));
