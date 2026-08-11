@@ -3,6 +3,7 @@ import path from "path";
 import pool from "./database.ts";
 
 const app = express();
+app.use(express.json());
 
 interface Ingredient {
   name: string;
